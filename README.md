@@ -6,7 +6,7 @@
 
 **天学网 增强模块 · LSPosed / Vector**
 
-![version](https://img.shields.io/badge/version-1.3-blue)
+![version](https://img.shields.io/badge/version-1.33-blue)
 ![framework](https://img.shields.io/badge/framework-LSPosed%20%7C%20Vector-9cf)
 ![android](https://img.shields.io/badge/Android-7.0%2B%20(minSdk%2023)-green)
 ![purpose](https://img.shields.io/badge/用途-学习研究-orange)
@@ -27,6 +27,7 @@
 | **朗读/读单词评分（改判满分）** | 本地语音评测结果改写，读单词直接满分 |
 | **自动听音** | 进入页面自动播放发音，也可手动触发 |
 | **想得久一点** | 答题倒计时放宽 / 不限时 |
+| **听力等待放宽** | 听力音频静音跳到结尾并补发结束事件，等待时间可按百分比缩放 |
 | **设置页外观** | 跟随系统深浅色，也可手动指定浅色 / 深色 |
 
 ## 环境要求
@@ -37,12 +38,12 @@
 
 ## 安装
 
-1. 到 [Releases](../../releases) 下载 `tianxuewang-a11y-1.3.apk` 并安装；
+1. 到 [Releases](../../releases) 下载 `tianxuewang-a11y-1.33.apk` 并安装；
 2. 打开框架管理器（LSPosed / Vector）→ **模块** → 勾选「题神·天学网」；
 3. 在模块的**作用域**里勾选 天学网（`com.up366.mobile`）；
 4. 强制停止目标 App（或重启手机）后重新打开。
 
-> 首次启用建议强停目标 App，让 hook 重新加载。本模块**不写任何日志文件**。
+> 首次启用建议强停目标 App，让 hook 重新加载。1.33 起会写一份排查用的诊断日志（见下）。
 
 ## 使用
 
@@ -56,7 +57,7 @@
 A：确认作用域勾了目标 App，再**强制停止**目标 App 后重开；同时在模块设置页确认对应开关已打开。
 
 **Q：会写日志吗？**
-A：不会。当前版本已移除全部日志写盘。
+A：会写一份排查用的诊断日志：`/sdcard/Android/data/com.up366.mobile/files/txw-a11y-log.txt`（超过 2 MB 自动滚到 `txw-a11y-log.1.txt`），不影响功能，可随时删除。
 
 **Q：设置页是黑的/白的，能改吗？**
 A：默认跟随系统；在设置页「外观（本设置页）」里可选 跟随系统 / 浅色 / 深色。
@@ -75,6 +76,13 @@ A：LSPosed 与 Vector（同源分支）均已验证，安装方式一致。
 已在 LSPosed 官方模块仓库收录：https://modules.lsposed.org/module/io.github.jm350234shenzuo.txw.a11y/
 
 ## 更新日志
+
+### 1.33
+- 听力与等待放宽：接管 flipbook 的 u3sdk 原生播放器，长音频静音跳到结尾并补发 `onended`，不再「必须整段播完」；等待时间百分比同时缩放 `setTimeout` / `setInterval`。
+- 判分接管扩展到 H5 / JS 桥载荷：朗读、读单词、选择题评分统一改为满分（0..100 制）。
+- PK 对战判对：答错也走正确分支。
+- 新增 `TXWPK:` / `TXWWAIT:` 诊断日志。
+- 本版为 1.11–1.33 主线的整合最终版（versionCode 34）。
 
 ### 1.3
 - 说明与介绍改为与实际功能一致，移除「悬浮控制球」「跳过题目」等已不存在的条目。
